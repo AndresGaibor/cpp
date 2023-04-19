@@ -52,9 +52,8 @@ void mostrarArreglo(int arreglo[], int n) {
 }
 
 bool leerRemplazar() {
-    bool rem = false;
+    bool rem = false; string opt;
 
-    string opt;
     cout << "Desea remplazar el valor actual de esa posicion (si o no) :"; cin >> opt;
 
     if(opt == "si") { rem = true; }
@@ -68,17 +67,19 @@ void liberarPos(int arreglo[], int n, int pos) {
     }
 }
 
-void eliminarPos(int arreglo[], int n, int pos) { 
+int eliminarPos(int arreglo[], int n, int pos) { 
+    n--;
     for (int i = pos; i < n; i++) {
         arreglo[i] = arreglo[i + 1];
     }
+    return n;
 }
 
 int inserccion(int arreglo[], int n) {
-    int nnumero, pos; 
+    int nnumero; 
     cout << endl << "Ingresar un nuevo numero: "; cin >> nnumero; cout << endl;
 
-    pos = leerNumero(n, 0, true);
+    int pos = leerNumero(n, 0, true);
 
     bool remplazar = leerRemplazar();
 
@@ -113,11 +114,7 @@ int eliminarElPorPosicion(int arreglo[], int n, int pos = -1) {
         pos = leerNumero(n - 1, 0, true);
     }
 
-    n--;
-
-    eliminarPos(arreglo, n, pos);
-    
-    return n;
+    return eliminarPos(arreglo, n, pos);    
 }
 
 int eliminarElementoBuscar(int arreglo[], int n) {
@@ -127,12 +124,13 @@ int eliminarElementoBuscar(int arreglo[], int n) {
 
     if(posEl != -1) {
         return eliminarElPorPosicion(arreglo, n, posEl);
-    } else {
-        cout << endl << "No se encontro el elemento " << endl;
     }
+    
+    cout << endl << "No se encontro el elemento " << endl;
     
     return n;
 }
+
 
 int main() {
     int n = leerNumero(EXT);
@@ -159,4 +157,3 @@ int main() {
 
     return 0;
 }
-
