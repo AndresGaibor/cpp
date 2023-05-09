@@ -1,6 +1,6 @@
-#include <iostream>
+// #include <iostream>
 
-using namespace std;
+// using namespace std;
 
 #ifndef LEERN_H
 #define LEERN_H
