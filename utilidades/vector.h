@@ -1,33 +1,27 @@
 
-typedef int Tipo; // crear un tipo base de datos para el arreglo
-#define EXT 15
+#ifndef VECTOR_H
 
-class vector {
+class Vector
+{
 private:
-    Tipo v[EXT];
-    int nElementos;
+    Tipo vec[EXT];
 
 public:
-    vector();
-    void setV(Tipo val, int pos);
-    void setNEl(int numeroElementos);
-    Tipo getV(int pos);
-    int getNumeroEl();
+    Vector();
+    void setVector(int i, Tipo dato);
+    Tipo getVector(int i);
 };
 
-vector::vector() {}
-void vector::setV(Tipo val, int pos) {
-    v[pos] = val;
+void Vector::setVector(int i, Tipo dato)
+{
+    vec[i] = dato;
 }
 
-void vector::setNEl(int numeroElementos) {
-    this->nElementos = numeroElementos;
+Tipo Vector::getVector(int i)
+{
+    return vec[i];
 }
 
-Tipo vector::getV(int pos) {
-    return v[pos];
-}
+Vector::Vector() {}
 
-int vector::getNumeroEl() {
-    return nElementos;
-}
+#endif

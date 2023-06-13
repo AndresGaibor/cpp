@@ -17,4 +17,18 @@ int leerN(char mensaje[] = "Ingrese la cantidad de numeros (mayor a 0): ") {
     return n;
 }
 
+// SI RETORNA -111 QUIERE DECIR QUE (SE PRESIONO ENTER) YA NO QUIERE INGRESAR MAS DATOS
+int leerNumero() {
+    string linea;
+
+    cout << endl << "Ingrese un dato (Presione Enter para dejar de ingresar): ";
+    getline(cin, linea);
+
+    if (linea.empty()) {
+        return -111;
+    }
+
+    int dato = stoi(linea);
+}
+
 #endif
