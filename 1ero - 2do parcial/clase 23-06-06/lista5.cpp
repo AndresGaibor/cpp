@@ -4,7 +4,7 @@
 #define FIN 99999
 
 #include <iostream>
-#include "../utilidades/lista.h"
+#include "../../utilidades/lista.h"
 using namespace std;
 
 int main()

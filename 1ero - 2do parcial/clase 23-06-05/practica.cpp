@@ -5,7 +5,7 @@
  */
 #include <iostream>
 
-#include "../utilidades/lista.h"
+#include "../../utilidades/lista.h"
 
 using namespace std;
 

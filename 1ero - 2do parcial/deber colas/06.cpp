@@ -8,8 +8,8 @@
 typedef int Tipo;
 
 #include <iostream>
-#include "../utilidades/colaCircular.h"
-#include "../utilidades/pila.h"
+#include "../../utilidades/colaCircular.h"
+#include "../../utilidades/pila.h"
 
 using namespace std;
 

@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-#include "../utilidades/leerN.h"
+#include "../../utilidades/leerN.h"
 
 void individualizarDigitos(int numero, int *dM = 0) {
     if (numero == 0) {

@@ -4,7 +4,7 @@
  */
 
 #include <iostream>
-#include "../utilidades/nodo.h"
+#include "../../utilidades/nodo.h"
 
 using namespace std;
 

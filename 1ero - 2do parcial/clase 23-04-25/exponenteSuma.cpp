@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#include "../utilidades/leerN.h"
+#include "../../utilidades/leerN.h"
 
 int exponencialC(int a, int b) {
     int c = 1;

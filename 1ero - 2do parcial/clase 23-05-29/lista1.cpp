@@ -1,6 +1,6 @@
 using namespace std;
 #include <iostream>
-#include "../utilidades/lista.h"
+#include "../../utilidades/lista.h"
 #define EXT 99999
 
 void ingresarLista(Lista *l1)

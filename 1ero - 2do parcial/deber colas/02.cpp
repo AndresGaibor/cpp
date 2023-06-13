@@ -7,7 +7,7 @@
 typedef int Tipo;
 
 #include <iostream>
-#include "../utilidades/colaCircular.h"
+#include "../../utilidades/colaCircular.h"
 
 using namespace std;
 

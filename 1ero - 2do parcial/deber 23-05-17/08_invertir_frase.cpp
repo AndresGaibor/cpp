@@ -7,7 +7,7 @@
 
 typedef char Tipo;
 
-#include "../utilidades/pila.h"
+#include "../../utilidades/pila.h"
 
 
 using namespace std;
