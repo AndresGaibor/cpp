@@ -5,30 +5,22 @@
 #ifndef LEERN_H
 #define LEERN_H
 
-int leerN(char mensaje[] = "Ingrese la cantidad de numeros (mayor a 0): ") {
-    int n;
-    cout << mensaje;
-    cin >> n;
-    
-    if(n < 1) {
-        n = leerN();
+#include "lista.h"
+
+void ingresarNumerosEnLista(int FIN, Lista *lista, char mensaje[] = "Ingrese un numero")
+{
+    int valor;
+
+    cout << mensaje << " (SALGA CON " << FIN << " )" << endl;
+    cin >> valor;
+
+    if(valor == FIN) {
+        return;
     }
 
-    return n;
-}
+    lista->insertarFinal(valor);
 
-// SI RETORNA -111 QUIERE DECIR QUE (SE PRESIONO ENTER) YA NO QUIERE INGRESAR MAS DATOS
-int leerNumero() {
-    string linea;
-
-    cout << endl << "Ingrese un dato (Presione Enter para dejar de ingresar): ";
-    getline(cin, linea);
-
-    if (linea.empty()) {
-        return -111;
-    }
-
-    int dato = stoi(linea);
+    ingresarNumerosEnLista(FIN, lista, mensaje);
 }
 
 #endif
