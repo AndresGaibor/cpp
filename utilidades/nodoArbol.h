@@ -18,6 +18,7 @@ private:
 
 public:
     NodoBinario();
+    NodoBinario(Tipo dato);
     NodoBinario(Tipo dato, NodoBinario* hIzq, NodoBinario* hDer);
 
     void setDato(Tipo valor);
@@ -39,6 +40,11 @@ NodoBinario::NodoBinario()
     setPadre(nullptr);
     setHijoIzquierdo(nullptr);
     setHijoDerecho(nullptr);
+}
+
+NodoBinario::NodoBinario(Tipo dato): NodoBinario()
+{
+    setDato(dato);
 }
 
 NodoBinario::NodoBinario(Tipo dato, NodoBinario* hIzq, NodoBinario* hDer)

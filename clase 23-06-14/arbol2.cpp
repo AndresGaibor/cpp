@@ -11,7 +11,7 @@
 
 using namespace std;
 
-void ingresarNumerosEnLista(NodoBinario nod[], int *cant, NodoBinario *padre = nullptr)
+void ingresarNumerosEnLista(NodoBinario *nod, int *cant, NodoBinario *padre = nullptr)
 {
     int valor, op;
 
