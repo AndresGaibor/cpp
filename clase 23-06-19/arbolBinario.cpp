@@ -6,6 +6,95 @@ using namespace std;
 #include <iostream>
 #include "../utilidades/arbolBinario.h"
 
+// sumatoria de las nodos ramas
+int sumarNodosNoHoja(NodoBinario* nodo) {
+	if(nodo == NULL) {
+		return 0;
+	}
+
+	NodoBinario* hDer, *hIzq;
+
+	hIzq = nodo->getHijoIzquierdo();
+	hDer = nodo->getHijoDerecho();
+	
+	if ((hIzq == NULL) && (hDer == NULL)) {
+		return 0;
+	} 
+
+	return nodo->getDato() + sumarNodosNoHoja(hIzq) + sumarNodosNoHoja(hDer); 
+}
+
+int mayor(NodoBinario* n1, NodoBinario* n2) {
+	if(n1->getDato() > n2->getDato()) {
+		return n1->getDato();
+	} 
+	
+	return n2->getDato();
+}
+
+int mayorValorPorNivel2(NodoBinario* nodo, int nivel = 0) {
+	if(nodo == NULL) {
+		return 0;
+	}
+
+	NodoBinario* hDer, *hIzq, NodoBinario, *hijoMayor;
+
+	hIzq = nodo->getHijoIzquierdo();
+
+	hDer = nodo->getHijoDerecho();
+
+	if(hIzq->getDato() < hDer->getDato()) { // comparamos los hijos
+		hijoMayor = hDer;
+
+		cout << "El mayor valor del nivel " << nivel << " es " << hijoMayor->getDato() << endl;
+	}
+
+	nivel = nivel + 1;
+
+	hIzq = hIzq->getHijoIzquierdo();
+
+	hDer = hDer->getHijoIzquierdo();
+
+	if(hijoMayor->getDato() < hIzq->getDato()) { // comparamos los hijos
+		hijoMayor = hIzq;
+
+		cout << "El mayor valor del nivel " << nivel << " es " << hijoMayor->getDato() << endl;
+	}
+
+	if(hijoMayor->getDato() < hDer->getDato()) { // comparamos los hijos
+		hijoMayor = hDer;
+
+		cout << "El mayor valor del nivel " << nivel << " es " << hijoMayor->getDato() << endl;
+	}
+
+
+}
+int mayorValorPorNivel(NodoBinario* nodo, int nivel = 0) {
+	if(nodo == NULL) {
+		return 0;
+	}
+
+	NodoBinario* hDer, *hIzq, NodoBinario, *hijoMayor;
+
+	hIzq = nodo->getHijoIzquierdo();
+	hDer = nodo->getHijoDerecho();
+
+	hijoMayor = hIzq;
+	
+	if(hIzq->getDato() < hDer->getDato()) { // comparamos los hijos
+		hijoMayor = hDer;
+
+		cout << "El mayor valor del nivel " << nivel << " es " << hijoMayor->getDato() << endl;
+	}
+
+	nivel = nivel + 1;
+
+
+	mayorValorPorNivel(hIzq);
+	mayorValorPorNivel(hDer);
+}
+
+
 int main(){					//programa principal
 	system("color f0");
 	ArbolBinario a;			//declara un árbol binario
@@ -24,6 +113,8 @@ int main(){					//programa principal
 	verHojasAB(a);						//llamado a impresion de nodos hoja del AB
 	recorrerAB(a);						//llamado a la funcion que implementa diversos recorridos de AB
 	
+	cout << "La suma de las ramas es " << sumarNodosNoHoja(a.getRaiz());
+
 	cout << endl;
 	system("pause");
 }
