@@ -1,19 +1,17 @@
-// ArbolBinario.h
-// Clase que contiene metodos de gestion de un AB
-// Autor: Julio Santillán C.
+// ArbolBinario String
+// Clase que contiene metodos de gestion de un AB de strings
 
-#ifndef _ARBOL_BINARIO_H
-#define _ARBOL_BINARIO_H
+#ifndef _ARBOL_BINARIOS_H
+#define _ARBOL_BINARIOS_H
 
-#include "nodoArbol.h"
+#include "nodoArbolString.h"
 #include <iostream>
-#include <string>
-using namespace std;
 
 class ArbolBinario
 {
 private:
 	NodoBinario *raiz;
+	NodoBinario *leerNodo(int margen);
 	void inorden(NodoBinario *r);
 	void preorden(NodoBinario *r);
 	void postorden(NodoBinario *r);
@@ -30,8 +28,6 @@ public:
 
 	bool esVacio();
 	NodoBinario *construirAB(Tipo dato, NodoBinario *i, NodoBinario *d);
-
-	NodoBinario *leerNodo(int margen = 0, string mensaje = "IZQUIERDO", NodoBinario *padre = nullptr);
 
 	void leer();
 	void imprimirABSimple(NodoBinario *p);
@@ -85,7 +81,7 @@ Tipo leerValor(int fin = 99999)
 	return valor;
 }
 
-int datoDesdeEntrada(int fin = 99999, string mensaje = "Ingrese valor para el nodo")
+Tipo datoDesdeEntrada(Tipo fin = "99999", string mensaje = "Ingrese valor para el nodo")
 {
 	string linea;
 	cout << endl
@@ -97,19 +93,16 @@ int datoDesdeEntrada(int fin = 99999, string mensaje = "Ingrese valor para el no
 		return fin;
 	}
 
-	int dato = stoi(linea);
-
-	return dato;
+	return linea;
 }
 
-NodoBinario *ArbolBinario::leerNodo(int margen, string mensaje, NodoBinario *padre)
+NodoBinario *ArbolBinario::leerNodo(int margen = 0)
 {
-	Tipo valor, fin = 99999;
+	Tipo valor, fin = "99999";
 	NodoBinario *nuevoN;
 
 	cout << endl;
-	imprimirEspacio(margen);
-	cout << "--- SUBARBOL " << mensaje << " (N. PADRE " << ((padre != nullptr) ? to_string(padre->getDato()) : "RAIZ") << ") ---" << endl;
+
 	valor = datoDesdeEntrada(fin);
 
 	if (valor == fin)
@@ -119,12 +112,14 @@ NodoBinario *ArbolBinario::leerNodo(int margen, string mensaje, NodoBinario *pad
 
 	nuevoN = new NodoBinario(valor);
 
-	// imprimirEspacio(margen);
+	imprimirEspacio(margen);
 
-	nuevoN->setHijoIzquierdo(leerNodo(margen + 1, "IZQUIERDO", nuevoN));
-	// imprimirEspacio(margen);
+	cout << "--- SUBARBOL IZQUIERDO(N. PADRE " << nuevoN->getDato() << ") ---";
+	nuevoN->setHijoIzquierdo(leerNodo(margen + 1));
+	imprimirEspacio(margen);
 
-	nuevoN->setHijoDerecho(leerNodo(margen + 1, "DERECHO", nuevoN));
+	cout << "--- SUBARBOL DERECHO(N. PADRE " << nuevoN->getDato() << ") ---";
+	nuevoN->setHijoDerecho(leerNodo(margen + 1));
 
 	return nuevoN;
 }
@@ -180,7 +175,7 @@ NodoBinario *ArbolBinario::insertar(NodoBinario *rSub, Tipo valor)
 		return rSub;
 	}
 
-	if (valor < rSub->getDato())
+	if (stringToAscii(valor) < stringToAscii(rSub->getDato()))
 	{
 		NodoBinario *iz = insertar(rSub->getHijoIzquierdo(), valor);
 		rSub->setHijoIzquierdo(iz);
@@ -286,7 +281,7 @@ NodoBinario *ArbolBinario::buscar(NodoBinario *rSub, Tipo v)
 
 	NodoBinario *hijo = NULL;
 
-	if (v < rSub->getDato())
+	if (stringToAscii(v) < stringToAscii(rSub->getDato()))
 	{
 		hijo = rSub->getHijoIzquierdo();
 	}

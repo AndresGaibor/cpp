@@ -2,13 +2,13 @@
  * Definicion de la clase de una lista simple
  */
 
-#ifndef NODO_H
-#define NODO_H
+#ifndef NODOV_H
+#define NODOV_H
 
 // #include <cstddef>
-// #include "vertice.h"
+#include "vertice.h"
 
-typedef int Tipo;
+typedef Vertice Tipo;
 
 class Nodo
 {

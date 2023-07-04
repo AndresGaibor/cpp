@@ -32,68 +32,34 @@ int mayor(NodoBinario* n1, NodoBinario* n2) {
 	return n2->getDato();
 }
 
-int mayorValorPorNivel2(NodoBinario* nodo, int nivel = 0) {
-	if(nodo == NULL) {
-		return 0;
+void recorrerNiveles(NodoBinario* nodo, Tipo valoresMayores[20], int nivel = 0) {
+	if(nodo == nullptr) {
+		return;
 	}
 
-	NodoBinario* hDer, *hIzq, NodoBinario, *hijoMayor;
-
-	hIzq = nodo->getHijoIzquierdo();
-
-	hDer = nodo->getHijoDerecho();
-
-	if(hIzq->getDato() < hDer->getDato()) { // comparamos los hijos
-		hijoMayor = hDer;
-
-		cout << "El mayor valor del nivel " << nivel << " es " << hijoMayor->getDato() << endl;
+	if(valoresMayores[nivel] < nodo->getDato()) {
+		valoresMayores[nivel] = nodo->getDato();
 	}
 
-	nivel = nivel + 1;
+	nivel += 1;
 
-	hIzq = hIzq->getHijoIzquierdo();
-
-	hDer = hDer->getHijoIzquierdo();
-
-	if(hijoMayor->getDato() < hIzq->getDato()) { // comparamos los hijos
-		hijoMayor = hIzq;
-
-		cout << "El mayor valor del nivel " << nivel << " es " << hijoMayor->getDato() << endl;
-	}
-
-	if(hijoMayor->getDato() < hDer->getDato()) { // comparamos los hijos
-		hijoMayor = hDer;
-
-		cout << "El mayor valor del nivel " << nivel << " es " << hijoMayor->getDato() << endl;
-	}
-
-
-}
-int mayorValorPorNivel(NodoBinario* nodo, int nivel = 0) {
-	if(nodo == NULL) {
-		return 0;
-	}
-
-	NodoBinario* hDer, *hIzq, NodoBinario, *hijoMayor;
-
-	hIzq = nodo->getHijoIzquierdo();
-	hDer = nodo->getHijoDerecho();
-
-	hijoMayor = hIzq;
-	
-	if(hIzq->getDato() < hDer->getDato()) { // comparamos los hijos
-		hijoMayor = hDer;
-
-		cout << "El mayor valor del nivel " << nivel << " es " << hijoMayor->getDato() << endl;
-	}
-
-	nivel = nivel + 1;
-
-
-	mayorValorPorNivel(hIzq);
-	mayorValorPorNivel(hDer);
+	recorrerNiveles(nodo->getHijoIzquierdo(), valoresMayores, nivel);
+	recorrerNiveles(nodo->getHijoDerecho(), valoresMayores, nivel);
 }
 
+void mayorValorPorNivel(NodoBinario* raiz) {
+	Tipo valoresMayores[20];
+
+	recorrerNiveles(raiz, valoresMayores);
+
+	cout << "Los valores mayores de cada nivel son: " << endl;
+
+	for(int i = 0; i < 20; i++) {
+		if(valoresMayores[i] != 0) {
+			cout << "Nivel " << i << " : " << valoresMayores[i] << endl;
+		}
+	}
+}
 
 int main(){					//programa principal
 	system("color f0");
@@ -114,6 +80,8 @@ int main(){					//programa principal
 	recorrerAB(a);						//llamado a la funcion que implementa diversos recorridos de AB
 	
 	cout << "La suma de las ramas es " << sumarNodosNoHoja(a.getRaiz());
+
+	mayorValorPorNivel(a.getRaiz());
 
 	cout << endl;
 	system("pause");
