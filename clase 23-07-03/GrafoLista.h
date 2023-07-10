@@ -78,14 +78,14 @@ bool GrafoLista::esMenorAlMaximo(int n, int n2) {
 	return c1 && c2;
 }
 
-void GrafoLista::setVertice(int va, Vertice v) {			//modifica los atributos de un vertice, conociendo su numero
-	if (esMenorAlMaximo(va)) {
-		verts[va] = v;										//actualiza atributos
+void GrafoLista::setVertice(int posVa, Vertice v) {
+	if (esMenorAlMaximo(posVa)) {
+		verts[posVa] = v;
 	} 
 }
 
 void GrafoLista::setVertice(Tipo a, Vertice v) {
-	int pos = getNumVertice(a);									//calcula numero de vertice del primer nombre recibido
+	int pos = getNumVertice(a);
 	
 	setVertice(pos, v);
 }
@@ -96,10 +96,10 @@ void GrafoLista::setArco(int posVa, int posVb){					//actualiza valor de arco re
 	}
 }
 
-void GrafoLista::setArco(int va, int vb, int peso) {			//actualiza peso de arco recibiendo numeros de vertices y factor de peso
-	setArco(va, vb);
+void GrafoLista::setArco(int posVa, int posVb, int peso) {			//actualiza peso de arco recibiendo numeros de vertices y factor de peso
+	setArco(posVa, posVb);
 
-	arcos[va]->ultimoValorDeLista()->setPeso(peso);
+	arcos[posVa]->ultimoValorDeLista()->setPeso(peso);
 }
 
 void GrafoLista::setArco(Tipo a, Tipo b){					//actualiza valor de arco recibiendo nombres de vertices en grafos no valorados
@@ -110,29 +110,28 @@ void GrafoLista::setArco(Tipo a, Tipo b){					//actualiza valor de arco recibien
 	setArco(va, vb);
 }
 
-void GrafoLista::setArco(Tipo a, Tipo b, int v) {			//modifica el valor almacenado en lista de adyacencia, de dos vertices recibidos por su nombre
-	int va, vb;												//variables para contener numeros de los vertices recibidos por nombre
-	va = getNumVertice(a);									//calcula numero de vertice del primer nombre recibido
-	vb = getNumVertice(b);									//calcula numero de vertice del segundo nombre recibido
+void GrafoLista::setArco(Tipo valorA, Tipo valorB, int v) {
+	int posVa, posVb;
+	posVa = getNumVertice(valorA);
+	posVb = getNumVertice(valorB);
 	
-	setArco(va, vb, v);
+	setArco(posVa, posVb, v);
 }
 
-int GrafoLista::getMaxVerts(){								//devuelve cantidad maxima de vertices
+int GrafoLista::getMaxVerts(){
 	return maxVerts;
 }
 
-int GrafoLista::cantidadVertices(){								//devuelve cantidad de vertices
+int GrafoLista::cantidadVertices(){
 	return numVerts;
 }
 
-Vertice GrafoLista::getVertice(int va) {					//retorna todos los atributos del vértice, si existe en el grafo, conociendo su numero
-	if ((va < 0) || (va >= cantidadVertices())) {				//numero de vertice incorrecto
+Vertice GrafoLista::getVertice(int posVa) {					//retorna todos los atributos del vértice, si existe en el grafo, conociendo su numero
+	if ((posVa < 0) || (posVa >= cantidadVertices())) {				//numero de vertice incorrecto
 		Vertice x;
 		return x;											//como Vértice no existe, devuelve vertice vacío
-	}												//numero de vertice existente en el grafo
- 	return verts[va];									//devuelve atributos del vertice
-	
+	}			
+ 	return verts[posVa];
 }
 
 Vertice GrafoLista::getVertice(Tipo a) {					//retorna todos los atributos del vértice si está almacenado en el grafo, conociendo su nombre
@@ -171,7 +170,8 @@ int GrafoLista::getNumVertice(Tipo v, int i) {						//determina el numero de un 
 
 void GrafoLista::nuevoVertice(Tipo v) {
 	bool existe = (getNumVertice(v) != -1);
-	if(existe && cantidadVertices() >= getMaxVerts()) {
+
+	if(existe || cantidadVertices() >= getMaxVerts()) {
 		return;
 	}
 
@@ -181,15 +181,11 @@ void GrafoLista::nuevoVertice(Tipo v) {
 }
 
 bool GrafoLista::adyacente(int va, int vb) {				//determina si dos vertices forman un arco conociendo su numero
-	if (esMenorAlMaximo(va, vb)){	//comprueba existencia de los dos vertices
-		return arcos[va] -> buscarValorEnLista(verts[vb].getDato()) != NULL;				
-	}												//vertices no existentes
-	return false;										//como no existen vertices, devuelve falso
-	
+	return getArco(va, vb);										//como no existen vertices, devuelve falso
 }
 
 bool GrafoLista::adyacente(Tipo a, Tipo b) {				//determina si dos vertices forman un arco conociendo su nombre
-	return getArco(a, b);								//como no existen vertices, devuelve falso
+	return getArco(a, b);
 }
 
 ListaG GrafoLista::listaAdyacencia(int v){					//metodo que devuelve la lista de adyacencia del vertice v

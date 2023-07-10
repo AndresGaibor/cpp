@@ -46,8 +46,8 @@ int main(){
 	cin.ignore();
 	
 	g = ingresarVertices(n);					//llamado a funcion de ingreso de los datos referentes al grafo
-	ingresarArcos(&g);							//llamado a la funcion que ingresa los arcos del grafo
-	//ingresarArcosValor(&g);					//llamado a la funcion que ingresa los arcos valorados del grafo
+	// ingresarArcos(&g);							//llamado a la funcion que ingresa los arcos del grafo
+	ingresarArcosValor(&g);					//llamado a la funcion que ingresa los arcos valorados del grafo
 	imprimirGrafo(g);							//llamado a la funcion que imprime la matriz de adyacencia
 	//imprimirLista(g);
 	
@@ -66,43 +66,49 @@ GrafoLista ingresarVertices(int n1){			//funcion que ingresa los datos de los v√
 	}
 	return a;
 }
+void tituloVertice(Vertice x){
+	cout << endl << "Vertice #" << x.getNum() + 1 << " - " << x.getDato() << " - ";
+}
 
 void ingresarArcos(GrafoLista *g){				//funcion que ingresa los datos de los arcos de un grafo
-	int nv = g->cantidadVertices();
-	int na;
-	Tipo aux;
+	int numeroVertices = g->cantidadVertices();
+	
+	int cantidadArcos;
+	Tipo valorVerticeB;
 
-	for (int i = 0; (i < nv); i++){
-		Vertice x = g -> getVertice(i);
-		cout << endl << "Vertice No. " << x.getNum()+1 << " - " << x.getDato() << " - ";
+	for (int i = 0; (i < numeroVertices); i++){
+		Vertice x = g->getVertice(i);
+		tituloVertice(x);
 		cout << endl << "CANTIDAD DE ARCOS DE SALIDA DEL VERTICE";
-		na = leerN(0, 10);
+		
+		cantidadArcos = leerN(0, 10);
 		cin.ignore();
 		
-		for (int j = 0; (j < na); j++){
+		for (int j = 0; j < cantidadArcos; j++){
 			cout << endl << "Valor del Vertice Destino: ";
 			string linea;
 			getline(cin, linea);
-			aux = linea;
-			g -> setArco(x.getDato(), aux);
+			valorVerticeB = linea;
+			g->setArco(x.getDato(), valorVerticeB);
 		}
 	}
 }
 
-void ingresarArcosValor(GrafoLista *g){			//funcion que ingresa los datos de los arcos de un grafo incluido peso
-	int nv = g -> cantidadVertices();
-	int na;
-	int peso;									//peso del arco
+
+
+void ingresarArcosValor(GrafoLista *g){
+	int numeroVertices = g -> cantidadVertices();
+	int na, peso;
 	Tipo aux;
 
-	for (int i = 0; (i < nv); i++){
+	for (int i = 0; (i < numeroVertices); i++){
 		Vertice x = g -> getVertice(i);
-		cout << endl << "Vertice No. " << x.getNum()+1 << " - " << x.getDato() << " - ";
+		tituloVertice(x);
 		cout << endl << "CANTIDAD DE ARCOS DE SALIDA DEL VERTICE";
 		na = leerN(0, 10);
 		cin.ignore();
 		
-		for (int j = 0; (j < na); j++){
+		for (int j = 0; j < na; j++){
 			cout << endl << "Valor del Vertice Destino: ";
 			cin >> aux; 
 			cout << endl << "PESO DEL ARCO";
@@ -113,17 +119,20 @@ void ingresarArcosValor(GrafoLista *g){			//funcion que ingresa los datos de los
 	}
 }
 
-void imprimirGrafo(GrafoLista g){				//funcion que presenta los datos del grafo
+void imprimirGrafo(GrafoLista g) {
 	int nv = g.cantidadVertices();
+
+	cout << endl << "nv " << nv;
+
 	int na;
 	Tipo aux;
 	cout << endl << "===============================================";
 	cout << endl << "L I S T A    D E    A D Y A C E N C I A";
 
-	for (int i = 0; (i < nv); i++){
+	for (int i = 0; i < nv; i++){
 		Vertice x = g.getVertice(i);
-		cout << endl << "Vertice No. " << x.getNum()+1 << " - " << x.getDato() << " - ";
-	
+		tituloVertice(x);
+
 		for (int j = 0; (j < nv); j++){
 			if (g.adyacente(i,j)){
 				Vertice x = g.getVertice(j);
@@ -135,22 +144,24 @@ void imprimirGrafo(GrafoLista g){				//funcion que presenta los datos del grafo
 	cout << endl;
 }
 
-void imprimirLista(GrafoLista g){				//funcion que presenta los datos del grafo
-	int nv = g.cantidadVertices();
-	NodoG* actual;								//apunta al nodo actual de la lista
+void mostrarArcos(NodoG* arco) {
+	if(arco == nullptr) {
+		return;
+	}
 
+	cout << arco->getDato() << " > " << arco->getPeso() << endl;
+	mostrarArcos(arco->getPunt());
+}
+
+void imprimirLista(GrafoLista g){
 	cout << endl << "ELEMENTOS CONTENIDOS EN LA LISTA";
 
-	for (int i = 0; (i < nv); i++){
+	for (int i = 0; i < g.cantidadVertices(); i++){
 		Vertice x = g.getVertice(i);
-		cout << endl << "Vertice No. " << x.getNum()+1 << " - " << x.getDato() << " - ";
+		tituloVertice(x);
 
-		ListaG vlista = g.listaAdyacencia(i);
-		actual = vlista.getPrimero();			//copiar la direccion del primer nodo de la lista
+		ListaG listaArcos = g.listaAdyacencia(i);
 
-		while (actual != NULL){					//repetir el ciclo mientras haya nodos en la lista
-			cout << endl << "- " << actual->getDato() << " > " << actual->getPeso();	//visualiza el contenido del nodo actual de la lista
-			actual = actual->getPunt();			//apuntador actual avanza al siguiente nodo
-		}
+		mostrarArcos(listaArcos.getPrimero());
 	}
 }

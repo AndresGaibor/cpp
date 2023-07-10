@@ -6,10 +6,10 @@
 #include "NodoG.h"
 
 class ListaG{
-private:									//elementos privados: atributos
+private:
 	NodoG* primero;							//atributo que permite almacenar la direccion de memoria del primer nodo de la lista
 	
-public:										//elementos publicos: métodos
+public:
 	ListaG();								//constructor
 	void setPrimero(NodoG* p);				//metodo que actualiza el apuntador al primer nodo de la lista
 	NodoG* getPrimero();					//metodo que devuelve la direccion del primer nodo de la lista
@@ -32,7 +32,7 @@ public:										//elementos publicos: métodos
 
 
 ListaG::ListaG(){							//constructor
-	setPrimero(NULL);						//inicializar el apuntador de inicio de la lista
+	setPrimero(NULL);	
 }
 
 void ListaG::setPrimero(NodoG* p){			//metodo que actualiza el apuntador al primer nodo de la lista
@@ -60,11 +60,9 @@ void ListaG::insertarAlInicio(Tipo v){		//metodo que inserta un elemento dentro 
 }
 
 void ListaG::insertarAlInicio(Tipo v, int q){	//metodo que inserta un elemento dentro de la lista
-	NodoG* nuevo;							//declaracion de un nuevo nodo
-	
-	nuevo = new NodoG(v, q);				//llamar metodo constructor de nodo pasandole el valor recibido como parametro
-	nuevo->setPunt(getPrimero());			//llamar al metodo que actualiza la direccion a la cual debe apuntar el nuevo nodo
-	setPrimero(nuevo);						//actualiza la direccion del primer elemento de la lista: es el nuevo nodo creado
+	insertarAlInicio(v);
+
+	getPrimero()->setPeso(q);
 }
 
 void ListaG::insertarAlFinal(Tipo v, NodoG* nuevo = nullptr){		//metodo que inserta un elemento al final de la lista
@@ -74,8 +72,8 @@ void ListaG::insertarAlFinal(Tipo v, NodoG* nuevo = nullptr){		//metodo que inse
 		nuevo = new NodoG(v);
 	}
 
-	if (ultimo == NULL){					//lista esta vacia
-		setPrimero(nuevo);					//se crea el primer nodo de la lista
+	if (ultimo == NULL){
+		setPrimero(nuevo);
 	} else {								//existen otros nodos ya en la lista
 		ultimo = ultimoValorDeLista();		//apuntar al ultimo nodo de la lista
 		ultimo->setPunt(nuevo);			//actualiza el apuntador del que era el ultimo nodo de la lista
@@ -111,7 +109,7 @@ NodoG* ListaG::ultimoValorDeLista(NodoG* p, bool primero) {
 	ultimoValorDeLista(p->getPunt(), false);
 }
 
-NodoG* ListaG::buscarValorEnLista(Tipo v){	//metodo que devuelve la direccion del nodo que contiene el valor v
+NodoG* ListaG::buscarValorEnLista(Tipo v){
 	NodoG* actual = getPrimero();					//copiar la direccion del primer nodo de la lista
 	while (actual != NULL){					//repetir el ciclo mientras el nodo apuntado por actual no apunta a NULL
 		if (actual->getDato() == v){		//el valor almacenado en el nodo referido desde actual es igual al valor buscado
