@@ -8,7 +8,6 @@ using namespace std;
 
 #ifndef PILA_H
 
-#define EXT 100
 
 typedef int Tipo; // Definir el tipo por defecto si no está definido previamente
 
